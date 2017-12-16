@@ -23,7 +23,7 @@ App = React.createClass({
         }.bind(this));
     },
 
-    getGif: function(searchingText, callback) {  
+    getGif: function getGifs(searchingText) {  
         const promis = new Promise(
             function (resolve, reject) {
                 var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;  // 2.
@@ -36,19 +36,20 @@ App = React.createClass({
                             url: data.fixed_width_downsampled_url,
                             sourceUrl: data.url
                         };
-                        resolve(xhr.status); 
+                        resolve(data);
                     } else {
-                        reject(new Error(xhr.statusText));
+                    	 
+                        reject(xhr.statusText);
                     }                   
                 };
-                request.onerror = function () {
-	                reject(new Error(`XMLHttpRequest Error: ${xhr.statusText}`));
+                xhr.onerror = function () {
+	               	reject(new Error(`XMLHttpRequest Error: ${xhr.statusText}`));
 	            	};
                 xhr.send();
             }
         );
-    },
-    
+    }, 
+ 	//getGifs(searchingText).then(gif => callback(gif)).catch(() => console.error('Gif dont go back'));
     render: function() {
 
         var styles = {
@@ -67,7 +68,7 @@ App = React.createClass({
                 url={this.state.gif.url}
                 sourceUrl={this.state.gif.sourceUrl}
                 />
-          </div>
+          	</div>
         );
     }
 });
