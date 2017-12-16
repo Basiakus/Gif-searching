@@ -36,7 +36,6 @@ App = React.createClass({
                             url: data.fixed_width_downsampled_url,
                             sourceUrl: data.url
                         };
-                        callback(gif);
                         resolve(xhr.status); 
                     } else {
                         reject(new Error(xhr.statusText));
