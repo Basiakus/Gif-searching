@@ -25,7 +25,7 @@ App = React.createClass({
     },
 
     getGif: function(searchingText) {  
-        const promis = new Promise(
+        return new Promise(
             function (resolve, reject) {
                 var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;  // 2.
                 var xhr = new XMLHttpRequest();  // 3.
@@ -48,8 +48,9 @@ App = React.createClass({
 	            	};
                 xhr.send();
             }
+
         );
-        return promis.resolve;
+            
     }, 
  	//getGifs(searchingText).then(callback).catch(() => console.error('error'));
     render: function() {
