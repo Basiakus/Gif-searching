@@ -10,49 +10,49 @@ App = React.createClass({
         };
     },
 
-    handleSearch: function(searchingText) {  // 1.
+    handleSearch: function(searchingText) { // 1.
         this.setState({
-            loading: true  // 2.
+            loading: true // 2.
         });
         this.getGif(searchingText)
-            .then(gif => {  // 3.
-            this.setState({  // 4
-                loading: false,  // a
-                gif: gif,  // b
-                searchingText: searchingText  // c
+            .then(gif => { // 3.
+                this.setState({ // 4
+                    loading: false, // a
+                    gif: gif, // b
+                    searchingText: searchingText // c
+                });
             });
-        });
     },
 
-    getGif: function(searchingText) {  
+    getGif: function(searchingText) {
         return new Promise(
-            function (resolve, reject) {
-                var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;  // 2.
-                var xhr = new XMLHttpRequest();  // 3.
+            function(resolve, reject) {
+                var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText; // 2.
+                var xhr = new XMLHttpRequest(); // 3.
                 xhr.open('GET', url);
                 xhr.onload = function() {
                     if (xhr.status === 200) {
                         var data = JSON.parse(xhr.responseText).data; // 4.
-                        var gif = {  // 5.
+                        var gif = { // 5.
                             url: data.fixed_width_downsampled_url,
                             sourceUrl: data.url
                         };
                         resolve(gif);
                     } else {
-                    	 
+
                         reject(xhr.statusText);
-                    }                   
+                    }
                 };
-                xhr.onerror = function () {
-	               	reject(xhr.statusText);
-	            	};
+                xhr.onerror = function() {
+                    reject(xhr.statusText);
+                };
                 xhr.send();
             }
 
         );
-            
-    }, 
- 	//getGifs(searchingText).then(callback).catch(() => console.error('error'));
+
+    },
+    //getGifs(searchingText).then(callback).catch(() => console.error('error'));
     render: function() {
 
         var styles = {
@@ -71,7 +71,7 @@ App = React.createClass({
                 url={this.state.gif.url}
                 sourceUrl={this.state.gif.sourceUrl}
                 />
-          	</div>
+            </div>
         );
     }
 });
